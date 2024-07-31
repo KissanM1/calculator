@@ -4,6 +4,15 @@ let operator = null;
 
 const display = document.querySelector(".display");
 
+const operationCalls = {
+    'X' : multiply,
+    '/' : divide,
+    '+' : add,
+    '-' : subtract,
+    '=' : operator
+};
+
+
 //Assigns html number button elements to variables
 const one = document.querySelector(".one");
 const two = document.querySelector(".two");
@@ -42,7 +51,7 @@ multiplyButton.addEventListener("click", () => updateDisplay(null, "X"));
 divideButton.addEventListener("click", () => updateDisplay(null, "/"));
 addButton.addEventListener("click", () => updateDisplay(null, "+"));
 subtractButton.addEventListener("click", () => updateDisplay(null, "-"));
-equalsButton.addEventListener("click", () => updateDisplay(null, "="));
+equalsButton.addEventListener("click", operate);
 
 clearButton.addEventListener("click", clearDisplay);
 
@@ -62,17 +71,25 @@ function multiply(num1, num2) {
 
 function divide(num1, num2){
     return num1 / num2;
-    // Rounding error fix
+    // TODO Rounding error fix
 }
 
 
 // Calculation and display functions
-function operate(num1, num2, operator){
-    return operator(num1, num2);
+function operate(){
+    let operatorFunction = operationCalls[operator];
+    num1 = operatorFunction(parseInt(num1), parseInt(num2)).toString();
+    num2 = null;
+    operator = null;
+    display.textContent = num1;
 }
 
+
 function clearDisplay() {
-    display.textContent = "";
+    num1 = null;
+    num2 = null;
+    operator = null;
+
 }
 
 
@@ -92,6 +109,5 @@ function updateDisplay(number, operatorInput){
             num2 += number.toString();
         }
     }
-
     display.textContent = `${num1} ${operator} ${num2}`;
 }
