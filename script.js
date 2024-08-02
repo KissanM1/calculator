@@ -102,12 +102,14 @@ function updateDisplay(number, operatorInput){
         } else {
             operator = operatorInput;
         }
+        display.textContent = num1;
         } else  {
-        if (num2 === null) {
-            num2 = number.toString();
-        } else {
-            num2 += number.toString();
-        }
+            if (num2 === null) {
+                num2 = number.toString();
+            } else {
+                num2 += number.toString();
+            }
+            display.textContent = num2;
+
     }
-    display.textContent = `${num1} ${operator} ${num2}`;
 }
